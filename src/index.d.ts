@@ -1,11 +1,11 @@
 declare module 'discord-akairo' {
     import {
         BufferResolvable, Client, ClientOptions, Collection,
-        Message, MessageAttachment, MessageEmbed,
+        Message, AttachmentBuilder, AttachmentData, EmbedBuilder,
         MessageEditOptions, MessageOptions, MessagePayload,
         User, UserResolvable, GuildMember,
         Channel, Role, Emoji, Guild, ReplyMessageOptions,
-        PermissionResolvable, Snowflake
+        PermissionResolvable, Snowflake, EmbedData
     } from 'discord.js';
 
     import { EventEmitter } from 'events';
@@ -123,7 +123,7 @@ declare module 'discord-akairo' {
 
         public readonly client: AkairoClient;
 
-        public attachment(file: BufferResolvable | Stream, name?: string): MessageAttachment;
+        public attachment(file: BufferResolvable | Stream, data?: AttachmentData): AttachmentBuilder;
         public checkChannel(text: string, channel: Channel, caseSensitive?: boolean, wholeWord?: boolean): boolean;
         public checkEmoji(text: string, emoji: Emoji, caseSensitive?: boolean, wholeWord?: boolean): boolean;
         public checkGuild(text: string, guild: Guild, caseSensitive?: boolean, wholeWord?: boolean): boolean;
@@ -132,7 +132,7 @@ declare module 'discord-akairo' {
         public checkUser(text: string, user: User, caseSensitive?: boolean, wholeWord?: boolean): boolean;
         public collection<K, V>(iterable?: Iterable<[K, V][]>): Collection<K, V>;
         public compareStreaming(oldMember: GuildMember, newMember: GuildMember): number;
-        public embed(data?: object): MessageEmbed;
+        public embed(data?: EmbedData): EmbedBuilder;
         public fetchMember(guild: Guild, id: string, cache?: boolean): Promise<GuildMember>;
         public resolveChannel(text: string, channels: Collection<Snowflake, Channel>, caseSensitive?: boolean, wholeWord?: boolean): Channel;
         public resolveChannels(text: string, channels: Collection<Snowflake, Channel>, caseSensitive?: boolean, wholeWord?: boolean): Collection<Snowflake, Channel>;
