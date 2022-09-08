@@ -1,6 +1,7 @@
 const { ArgumentMatches, ArgumentTypes } = require('../../../util/Constants');
 const Flag = require('../Flag');
 const { choice, intoCallable, isPromise } = require('../../../util/Util');
+const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 
 /**
  * Represents an argument for a command.
@@ -804,7 +805,7 @@ module.exports = Argument;
  * A function modifying a prompt text.
  * @typedef {Function} OtherwiseContentModifier
  * @param {Message} message - Message that triggered the command.
- * @param {string|MessageEmbed|MessageAttachment|MessageAttachment[]|MessageOptions} text - Text to modify.
+ * @param {string|EmbedBuilder|AttachmentBuilder|AttachmentBuilder[]|MessageOptions} text - Text to modify.
  * @param {FailureData} data - Miscellaneous data.
  * @returns {string|MessageOptions|MessageAdditions|Promise<string|MessageOptions|MessageAdditions>}
  */
@@ -821,7 +822,7 @@ module.exports = Argument;
  * A function modifying a prompt text.
  * @typedef {Function} PromptContentModifier
  * @param {Message} message - Message that triggered the command.
- * @param {string|MessageEmbed|MessageAttachment|MessageAttachment[]|MessageOptions} text - Text from the prompt to modify.
+ * @param {string|EmbedBuilder|AttachmentBuilder|AttachmentBuilder[]|MessageOptions} text - Text from the prompt to modify.
  * @param {ArgumentPromptData} data - Miscellaneous data.
  * @returns {string|MessageOptions|MessageAdditions|Promise<string|MessageOptions|MessageAdditions>}
  */

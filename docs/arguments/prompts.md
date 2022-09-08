@@ -92,7 +92,7 @@ This includes embeds, attachments, anything that can be sent.
 ```js
 prompt: {
     start: message => {
-        const embed = new MessageEmbed().setDescription('Please input a member!');
+        const embed = new EmbedBuilder().setDescription('Please input a member!');
         const content = 'Please!';
         return { embed, content };
     }

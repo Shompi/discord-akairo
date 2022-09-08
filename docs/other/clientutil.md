@@ -25,6 +25,6 @@ They allow you to, for example, find a user named `1Computer` from an input of `
 There are a bunch of other things you may find useful:  
 
 - `embed`, `attachment`, and `collection`
-    - Shortcuts for MessageEmbed, MessageAttachment, and Collection.
+    - Shortcuts for EmbedBuilder, AttachmentBuilder, and Collection.
 - `resolvePermissionNumber`
     - Converts a permission number to an array of permission names.

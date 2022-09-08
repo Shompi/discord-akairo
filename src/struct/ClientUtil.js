@@ -1,4 +1,4 @@
-const { Collection, MessageAttachment, MessageEmbed, Permissions } = require('discord.js');
+const { Collection, AttachmentBuilder, EmbedBuilder } = require('discord.js');
 
 /**
  * Client utilities to help with common tasks.
@@ -372,22 +372,22 @@ class ClientUtil {
     }
 
     /**
-     * Makes a MessageEmbed.
+     * Makes a EmbedBuilder.
      * @param {Object} [data] - Embed data.
-     * @returns {MessageEmbed}
+     * @returns {EmbedBuilder}
      */
     embed(data) {
-        return new MessageEmbed(data);
+      return new EmbedBuilder(data);
     }
 
     /**
-     * Makes a MessageAttachment.
+     * Makes a AttachmentBuilder.
      * @param {BufferResolvable|Stream} file - The file.
      * @param {string} [name] - The filename.
-     * @returns {MessageAttachment}
+     * @returns {AttachmentBuilder}
      */
     attachment(file, name) {
-        return new MessageAttachment(file, name);
+      return new AttachmentBuilder(file, name);
     }
 
     /**
