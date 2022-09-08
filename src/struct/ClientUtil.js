@@ -1,4 +1,4 @@
-const { Collection, AttachmentBuilder, EmbedBuilder } = require('discord.js');
+const { Collection, AttachmentBuilder, EmbedBuilder, PermissionsBitField, ActivityType } = require('discord.js');
 
 /**
  * Client utilities to help with common tasks.
@@ -59,11 +59,11 @@ class ClientUtil {
 
         if (!wholeWord) {
             return username.includes(text)
-            || (username.includes(text.split('#')[0]) && discrim.includes(text.split('#')[1]));
+                || (username.includes(text.split('#')[0]) && discrim.includes(text.split('#')[1]));
         }
 
         return username === text
-        || (username === text.split('#')[0] && discrim === text.split('#')[1]);
+            || (username === text.split('#')[0] && discrim === text.split('#')[1]);
     }
 
     /**
@@ -113,13 +113,13 @@ class ClientUtil {
 
         if (!wholeWord) {
             return displayName.includes(text)
-            || username.includes(text)
-            || ((username.includes(text.split('#')[0]) || displayName.includes(text.split('#')[0])) && discrim.includes(text.split('#')[1]));
+                || username.includes(text)
+                || ((username.includes(text.split('#')[0]) || displayName.includes(text.split('#')[0])) && discrim.includes(text.split('#')[1]));
         }
 
         return displayName === text
-        || username === text
-        || ((username === text.split('#')[0] || displayName === text.split('#')[0]) && discrim === text.split('#')[1]);
+            || username === text
+            || ((username === text.split('#')[0] || displayName === text.split('#')[0]) && discrim === text.split('#')[1]);
     }
 
     /**
@@ -167,11 +167,11 @@ class ClientUtil {
 
         if (!wholeWord) {
             return name.includes(text)
-            || name.includes(text.replace(/^#/, ''));
+                || name.includes(text.replace(/^#/, ''));
         }
 
         return name === text
-        || name === text.replace(/^#/, '');
+            || name === text.replace(/^#/, '');
     }
 
     /**
@@ -219,11 +219,11 @@ class ClientUtil {
 
         if (!wholeWord) {
             return name.includes(text)
-            || name.includes(text.replace(/^@/, ''));
+                || name.includes(text.replace(/^@/, ''));
         }
 
         return name === text
-        || name === text.replace(/^@/, '');
+            || name === text.replace(/^@/, '');
     }
 
     /**
@@ -271,11 +271,11 @@ class ClientUtil {
 
         if (!wholeWord) {
             return name.includes(text)
-            || name.includes(text.replace(/:/, ''));
+                || name.includes(text.replace(/:/, ''));
         }
 
         return name === text
-        || name === text.replace(/:/, '');
+            || name === text.replace(/:/, '');
     }
 
     /**
@@ -325,7 +325,7 @@ class ClientUtil {
      * @returns {string[]}
      */
     permissionNames() {
-        return Object.keys(Permissions.FLAGS);
+        return Object.keys(PermissionsBitField.Flags);
     }
 
     /**
@@ -336,8 +336,8 @@ class ClientUtil {
     resolvePermissionNumber(number) {
         const resolved = [];
 
-        for (const key of Object.keys(Permissions.FLAGS)) {
-            if (number & Permissions.FLAGS[key]) resolved.push(key);
+        for (const key of Object.keys(PermissionsBitField.Flags)) {
+            if (number & PermissionsBitField.Flags[key]) resolved.push(key);
         }
 
         return resolved;
@@ -351,8 +351,8 @@ class ClientUtil {
      * @returns {number}
      */
     compareStreaming(oldMember, newMember) {
-        const s1 = oldMember.presence?.activities.find(c => c.type === 'STREAMING');
-        const s2 = newMember.presence?.activities.find(c => c.type === 'STREAMING');
+        const s1 = oldMember.presence?.activities.find(c => c.type === ActivityType.Streaming);
+        const s2 = newMember.presence?.activities.find(c => c.type === ActivityType.Streaming);
         if (s1 === s2) return 0;
         if (s1) return 1;
         if (s2) return 2;
@@ -372,12 +372,12 @@ class ClientUtil {
     }
 
     /**
-     * Makes a EmbedBuilder.
+     * Makes an EmbedBuilder.
      * @param {Object} [data] - Embed data.
      * @returns {EmbedBuilder}
      */
     embed(data) {
-      return new EmbedBuilder(data);
+        return new EmbedBuilder(data);
     }
 
     /**
@@ -387,7 +387,7 @@ class ClientUtil {
      * @returns {AttachmentBuilder}
      */
     attachment(file, name) {
-      return new AttachmentBuilder(file, name);
+        return new AttachmentBuilder(file).setName(name);
     }
 
     /**

@@ -1,7 +1,6 @@
 const { ArgumentMatches, ArgumentTypes } = require('../../../util/Constants');
 const Flag = require('../Flag');
 const { choice, intoCallable, isPromise } = require('../../../util/Util');
-const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 
 /**
  * Represents an argument for a command.
