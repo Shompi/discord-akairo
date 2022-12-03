@@ -22,100 +22,100 @@ class Argument {
         modifyOtherwise = null
     } = {}) {
         /**
-         * The command this argument belongs to.
-         * @type {Command}
-         */
+		 * The command this argument belongs to.
+		 * @type {Command}
+		 */
         this.command = command;
 
         /**
-         * The method to match text.
-         * @type {ArgumentMatch}
-         */
+		 * The method to match text.
+		 * @type {ArgumentMatch}
+		 */
         this.match = match;
 
         /**
-         * The type to cast to or a function to use to cast.
-         * @type {ArgumentType|ArgumentTypeCaster}
-         */
+		 * The type to cast to or a function to use to cast.
+		 * @type {ArgumentType|ArgumentTypeCaster}
+		 */
         this.type = typeof type === 'function' ? type.bind(this) : type;
 
         /**
-         * The string(s) to use for flag or option match.
-         * @type {?string|string[]}
-         */
+		 * The string(s) to use for flag or option match.
+		 * @type {?string|string[]}
+		 */
         this.flag = flag;
 
         /**
-         * Whether to process multiple option flags instead of just the first.
-         * @type {boolean}
-         */
+		 * Whether to process multiple option flags instead of just the first.
+		 * @type {boolean}
+		 */
         this.multipleFlags = multipleFlags;
 
         /**
-         * The index to start from.
-         * @type {?number}
-         */
+		 * The index to start from.
+		 * @type {?number}
+		 */
         this.index = index;
 
         /**
-         * Whether or not the argument is unordered.
-         * @type {boolean|number|number[]}
-         */
+		 * Whether or not the argument is unordered.
+		 * @type {boolean|number|number[]}
+		 */
         this.unordered = unordered;
 
         /**
-         * The amount of phrases to match for rest, separate, content, or text match.
-         * @type {number}
-         */
+		 * The amount of phrases to match for rest, separate, content, or text match.
+		 * @type {number}
+		 */
         this.limit = limit;
 
         /**
-         * The prompt options.
-         * @type {?ArgumentPromptOptions}
-         */
+		 * The prompt options.
+		 * @type {?ArgumentPromptOptions}
+		 */
         this.prompt = prompt;
 
         /**
-         * The default value of the argument or a function supplying the default value.
-         * @type {DefaultValueSupplier|any}
-         */
+		 * The default value of the argument or a function supplying the default value.
+		 * @type {DefaultValueSupplier|any}
+		 */
         this.default = typeof defaultValue === 'function' ? defaultValue.bind(this) : defaultValue;
 
         /**
-         * The content or function supplying the content sent when argument parsing fails.
-         * @type {?string|MessageOptions|MessageAdditions|OtherwiseContentSupplier}
-         */
+		 * The content or function supplying the content sent when argument parsing fails.
+		 * @type {?string|BaseMessageOptions|MessageAdditions|OtherwiseContentSupplier}
+		 */
         this.otherwise = typeof otherwise === 'function' ? otherwise.bind(this) : otherwise;
 
         /**
-         * Function to modify otherwise content.
-         * @type {?OtherwiseContentModifier}
-         */
+		 * Function to modify otherwise content.
+		 * @type {?OtherwiseContentModifier}
+		 */
         this.modifyOtherwise = modifyOtherwise;
     }
 
     /**
-     * The client.
-     * @type {AkairoClient}
-     */
+	 * The client.
+	 * @type {AkairoClient}
+	 */
     get client() {
         return this.command.client;
     }
 
     /**
-     * The command handler.
-     * @type {CommandHandler}
-     */
+	 * The command handler.
+	 * @type {CommandHandler}
+	 */
     get handler() {
         return this.command.handler;
     }
 
     /**
-     * Processes the type casting and prompting of the argument for a phrase.
-     * @param {Message} message - The message that called the command.
-     * @param {string} phrase - The phrase to process.
-     * @returns {Promise<Flag|any>}
-     */
+	 * Processes the type casting and prompting of the argument for a phrase.
+	 * @param {Message} message - The message that called the command.
+	 * @param {string} phrase - The phrase to process.
+	 * @returns {Promise<Flag|any>}
+	 */
     async process(message, phrase) {
         const commandDefs = this.command.argumentDefaults;
         const handlerDefs = this.handler.argumentDefaults;
@@ -185,22 +185,22 @@ class Argument {
     }
 
     /**
-     * Casts a phrase to this argument's type.
-     * @param {Message} message - Message that called the command.
-     * @param {string} phrase - Phrase to process.
-     * @returns {Promise<any>}
-     */
+	 * Casts a phrase to this argument's type.
+	 * @param {Message} message - Message that called the command.
+	 * @param {string} phrase - Phrase to process.
+	 * @returns {Promise<any>}
+	 */
     cast(message, phrase) {
         return Argument.cast(this.type, this.handler.resolver, message, phrase);
     }
 
     /**
-     * Collects input from the user by prompting.
-     * @param {Message} message - Message to prompt.
-     * @param {string} [commandInput] - Previous input from command if there was one.
-     * @param {any} [parsedInput] - Previous parsed input from command if there was one.
-     * @returns {Promise<Flag|any>}
-     */
+	 * Collects input from the user by prompting.
+	 * @param {Message} message - Message to prompt.
+	 * @param {string} [commandInput] - Previous input from command if there was one.
+	 * @param {any} [parsedInput] - Previous parsed input from command if there was one.
+	 * @returns {Promise<Flag|any>}
+	 */
     async collect(message, commandInput = '', parsedInput = null) {
         const promptOptions = {};
         Object.assign(promptOptions, this.handler.argumentDefaults.prompt);
@@ -345,13 +345,13 @@ class Argument {
     }
 
     /**
-     * Casts a phrase to the specified type.
-     * @param {ArgumentType|ArgumentTypeCaster} type - Type to use.
-     * @param {TypeResolver} resolver - Type resolver to use.
-     * @param {Message} message - Message that called the command.
-     * @param {string} phrase - Phrase to process.
-     * @returns {Promise<any>}
-     */
+	 * Casts a phrase to the specified type.
+	 * @param {ArgumentType|ArgumentTypeCaster} type - Type to use.
+	 * @param {TypeResolver} resolver - Type resolver to use.
+	 * @param {Message} message - Message that called the command.
+	 * @param {string} phrase - Phrase to process.
+	 * @returns {Promise<any>}
+	 */
     static async cast(type, resolver, message, phrase) {
         if (Array.isArray(type)) {
             for (const entry of type) {
@@ -401,11 +401,11 @@ class Argument {
 
     /* eslint-disable no-invalid-this */
     /**
-     * Creates a type from multiple types (union type).
-     * The first type that resolves to a non-void value is used.
-     * @param {...ArgumentType|ArgumentTypeCaster} types - Types to use.
-     * @returns {ArgumentTypeCaster}
-     */
+	 * Creates a type from multiple types (union type).
+	 * The first type that resolves to a non-void value is used.
+	 * @param {...ArgumentType|ArgumentTypeCaster} types - Types to use.
+	 * @returns {ArgumentTypeCaster}
+	 */
     static union(...types) {
         return async function typeFn(message, phrase) {
             for (let entry of types) {
@@ -419,11 +419,11 @@ class Argument {
     }
 
     /**
-     * Creates a type from multiple types (product type).
-     * Only inputs where each type resolves with a non-void value are valid.
-     * @param {...ArgumentType|ArgumentTypeCaster} types - Types to use.
-     * @returns {ArgumentTypeCaster}
-     */
+	 * Creates a type from multiple types (product type).
+	 * Only inputs where each type resolves with a non-void value are valid.
+	 * @param {...ArgumentType|ArgumentTypeCaster} types - Types to use.
+	 * @returns {ArgumentTypeCaster}
+	 */
     static product(...types) {
         return async function typeFn(message, phrase) {
             const results = [];
@@ -439,12 +439,12 @@ class Argument {
     }
 
     /**
-     * Creates a type with extra validation.
-     * If the predicate is not true, the value is considered invalid.
-     * @param {ArgumentType|ArgumentTypeCaster} type - The type to use.
-     * @param {ParsedValuePredicate} predicate - The predicate function.
-     * @returns {ArgumentTypeCaster}
-     */
+	 * Creates a type with extra validation.
+	 * If the predicate is not true, the value is considered invalid.
+	 * @param {ArgumentType|ArgumentTypeCaster} type - The type to use.
+	 * @param {ParsedValuePredicate} predicate - The predicate function.
+	 * @returns {ArgumentTypeCaster}
+	 */
     static validate(type, predicate) {
         return async function typeFn(message, phrase) {
             if (typeof type === 'function') type = type.bind(this);
@@ -456,13 +456,13 @@ class Argument {
     }
 
     /**
-     * Creates a type where the parsed value must be within a range.
-     * @param {ArgumentType|ArgumentTypeCaster} type - The type to use.
-     * @param {number} min - Minimum value.
-     * @param {number} max - Maximum value.
-     * @param {boolean} [inclusive=false] - Whether or not to be inclusive on the upper bound.
-     * @returns {ArgumentTypeCaster}
-     */
+	 * Creates a type where the parsed value must be within a range.
+	 * @param {ArgumentType|ArgumentTypeCaster} type - The type to use.
+	 * @param {number} min - Minimum value.
+	 * @param {number} max - Maximum value.
+	 * @param {boolean} [inclusive=false] - Whether or not to be inclusive on the upper bound.
+	 * @returns {ArgumentTypeCaster}
+	 */
     static range(type, min, max, inclusive = false) {
         return Argument.validate(type, (msg, p, x) => {
             /* eslint-disable-next-line valid-typeof */
@@ -479,11 +479,11 @@ class Argument {
     }
 
     /**
-     * Creates a type that is the left-to-right composition of the given types.
-     * If any of the types fails, the entire composition fails.
-     * @param {...ArgumentType|ArgumentTypeCaster} types - Types to use.
-     * @returns {ArgumentTypeCaster}
-     */
+	 * Creates a type that is the left-to-right composition of the given types.
+	 * If any of the types fails, the entire composition fails.
+	 * @param {...ArgumentType|ArgumentTypeCaster} types - Types to use.
+	 * @returns {ArgumentTypeCaster}
+	 */
     static compose(...types) {
         return async function typeFn(message, phrase) {
             let acc = phrase;
@@ -498,11 +498,11 @@ class Argument {
     }
 
     /**
-     * Creates a type that is the left-to-right composition of the given types.
-     * If any of the types fails, the composition still continues with the failure passed on.
-     * @param {...ArgumentType|ArgumentTypeCaster} types - Types to use.
-     * @returns {ArgumentTypeCaster}
-     */
+	 * Creates a type that is the left-to-right composition of the given types.
+	 * If any of the types fails, the composition still continues with the failure passed on.
+	 * @param {...ArgumentType|ArgumentTypeCaster} types - Types to use.
+	 * @returns {ArgumentTypeCaster}
+	 */
     static composeWithFailure(...types) {
         return async function typeFn(message, phrase) {
             let acc = phrase;
@@ -516,11 +516,11 @@ class Argument {
     }
 
     /**
-     * Creates a type that parses as normal but also carries the original input.
-     * Result is in an object `{ input, value }` and wrapped in `Flag.fail` when failed.
-     * @param {ArgumentType|ArgumentTypeCaster} type - The type to use.
-     * @returns {ArgumentTypeCaster}
-     */
+	 * Creates a type that parses as normal but also carries the original input.
+	 * Result is in an object `{ input, value }` and wrapped in `Flag.fail` when failed.
+	 * @param {ArgumentType|ArgumentTypeCaster} type - The type to use.
+	 * @returns {ArgumentTypeCaster}
+	 */
     static withInput(type) {
         return async function typeFn(message, phrase) {
             if (typeof type === 'function') type = type.bind(this);
@@ -534,13 +534,13 @@ class Argument {
     }
 
     /**
-     * Creates a type that parses as normal but also tags it with some data.
-     * Result is in an object `{ tag, value }` and wrapped in `Flag.fail` when failed.
-     * @param {ArgumentType|ArgumentTypeCaster} type - The type to use.
-     * @param {any} [tag] - Tag to add.
-     * Defaults to the `type` argument, so useful if it is a string.
-     * @returns {ArgumentTypeCaster}
-     */
+	 * Creates a type that parses as normal but also tags it with some data.
+	 * Result is in an object `{ tag, value }` and wrapped in `Flag.fail` when failed.
+	 * @param {ArgumentType|ArgumentTypeCaster} type - The type to use.
+	 * @param {any} [tag] - Tag to add.
+	 * Defaults to the `type` argument, so useful if it is a string.
+	 * @returns {ArgumentTypeCaster}
+	 */
     static tagged(type, tag = type) {
         async function typeFn(message, phrase) {
             if (typeof type === 'function') type = type.bind(this);
@@ -556,13 +556,13 @@ class Argument {
     }
 
     /**
-     * Creates a type that parses as normal but also tags it with some data and carries the original input.
-     * Result is in an object `{ tag, input, value }` and wrapped in `Flag.fail` when failed.
-     * @param {ArgumentType|ArgumentTypeCaster} type - The type to use.
-     * @param {any} [tag] - Tag to add.
-     * Defaults to the `type` argument, so useful if it is a string.
-     * @returns {ArgumentTypeCaster}
-     */
+	 * Creates a type that parses as normal but also tags it with some data and carries the original input.
+	 * Result is in an object `{ tag, input, value }` and wrapped in `Flag.fail` when failed.
+	 * @param {ArgumentType|ArgumentTypeCaster} type - The type to use.
+	 * @param {any} [tag] - Tag to add.
+	 * Defaults to the `type` argument, so useful if it is a string.
+	 * @returns {ArgumentTypeCaster}
+	 */
     static taggedWithInput(type, tag = type) {
         return async function typeFn(message, phrase) {
             if (typeof type === 'function') type = type.bind(this);
@@ -576,12 +576,12 @@ class Argument {
     }
 
     /**
-     * Creates a type from multiple types (union type).
-     * The first type that resolves to a non-void value is used.
-     * Each type will also be tagged using `tagged` with themselves.
-     * @param {...ArgumentType|ArgumentTypeCaster} types - Types to use.
-     * @returns {ArgumentTypeCaster}
-     */
+	 * Creates a type from multiple types (union type).
+	 * The first type that resolves to a non-void value is used.
+	 * Each type will also be tagged using `tagged` with themselves.
+	 * @param {...ArgumentType|ArgumentTypeCaster} types - Types to use.
+	 * @returns {ArgumentTypeCaster}
+	 */
     static taggedUnion(...types) {
         return async function typeFn(message, phrase) {
             for (let entry of types) {
@@ -596,10 +596,10 @@ class Argument {
     /* eslint-enable no-invalid-this */
 
     /**
-     * Checks if something is null, undefined, or a fail flag.
-     * @param {any} value - Value to check.
-     * @returns {boolean}
-     */
+	 * Checks if something is null, undefined, or a fail flag.
+	 * @param {any} value - Value to check.
+	 * @returns {boolean}
+	 */
     static isFailure(value) {
         return value == null || Flag.is(value, 'fail');
     }
@@ -632,7 +632,7 @@ module.exports = Argument;
  * Applicable to text, content, rest, or separate match only.
  * @prop {DefaultValueSupplier|any} [default=null] - Default value if no input or did not cast correctly.
  * If using a flag match, setting the default value to a non-void value inverses the result.
- * @prop {string|MessageOptions|MessageAdditions|OtherwiseContentSupplier} [otherwise] - Text sent if argument parsing fails.
+ * @prop {string|BaseMessageOptions|MessageAdditions|OtherwiseContentSupplier} [otherwise] - Text sent if argument parsing fails.
  * This overrides the `default` option and all prompt options.
  * @prop {OtherwiseContentModifier} [modifyOtherwise] - Function to modify otherwise content.
  * @prop {ArgumentPromptOptions} [prompt] - Prompt options for when user does not provide input.
@@ -663,11 +663,11 @@ module.exports = Argument;
  * @prop {number} [limit=Infinity] - Amount of inputs allowed for an infinite prompt before finishing.
  * @prop {boolean} [breakout=true] - Whenever an input matches the format of a command, this option controls whether or not to cancel this command and run that command.
  * The command to be run may be the same command or some other command.
- * @prop {string|MessageOptions|MessageAdditions|PromptContentSupplier} [start] - Text sent on start of prompt.
- * @prop {string|MessageOptions|MessageAdditions|PromptContentSupplier} [retry] - Text sent on a retry (failure to cast type).
- * @prop {string|MessageOptions|MessageAdditions|PromptContentSupplier} [timeout] - Text sent on collector time out.
- * @prop {string|MessageOptions|MessageAdditions|PromptContentSupplier} [ended] - Text sent on amount of tries reaching the max.
- * @prop {string|MessageOptions|MessageAdditions|PromptContentSupplier} [cancel] - Text sent on cancellation of command.
+ * @prop {string|BaseMessageOptions|MessageAdditions|PromptContentSupplier} [start] - Text sent on start of prompt.
+ * @prop {string|BaseMessageOptions|MessageAdditions|PromptContentSupplier} [retry] - Text sent on a retry (failure to cast type).
+ * @prop {string|BaseMessageOptions|MessageAdditions|PromptContentSupplier} [timeout] - Text sent on collector time out.
+ * @prop {string|BaseMessageOptions|MessageAdditions|PromptContentSupplier} [ended] - Text sent on amount of tries reaching the max.
+ * @prop {string|BaseMessageOptions|MessageAdditions|PromptContentSupplier} [cancel] - Text sent on cancellation of command.
  * @prop {PromptContentModifier} [modifyStart] - Function to modify start prompts.
  * @prop {PromptContentModifier} [modifyRetry] - Function to modify retry prompts.
  * @prop {PromptContentModifier} [modifyTimeout] - Function to modify timeout messages.
@@ -779,7 +779,7 @@ module.exports = Argument;
  * Defaults for argument options.
  * @typedef {Object} DefaultArgumentOptions
  * @prop {ArgumentPromptOptions} [prompt] - Default prompt options.
- * @prop {string|MessageOptions|MessageAdditions|OtherwiseContentSupplier} [otherwise] - Default text sent if argument parsing fails.
+ * @prop {string|BaseMessageOptions|MessageAdditions|OtherwiseContentSupplier} [otherwise] - Default text sent if argument parsing fails.
  * @prop {OtherwiseContentModifier} [modifyOtherwise] - Function to modify otherwise content.
  */
 
@@ -804,9 +804,9 @@ module.exports = Argument;
  * A function modifying a prompt text.
  * @typedef {Function} OtherwiseContentModifier
  * @param {Message} message - Message that triggered the command.
- * @param {string|EmbedBuilder|AttachmentBuilder|AttachmentBuilder[]|MessageOptions} text - Text to modify.
+ * @param {string|EmbedBuilder|AttachmentBuilder|AttachmentBuilder[]|BaseMessageOptions} text - Text to modify.
  * @param {FailureData} data - Miscellaneous data.
- * @returns {string|MessageOptions|MessageAdditions|Promise<string|MessageOptions|MessageAdditions>}
+ * @returns {string|BaseMessageOptions|MessageAdditions|Promise<string|BaseMessageOptions|MessageAdditions>}
  */
 
 /**
@@ -814,16 +814,16 @@ module.exports = Argument;
  * @typedef {Function} OtherwiseContentSupplier
  * @param {Message} message - Message that triggered the command.
  * @param {FailureData} data - Miscellaneous data.
- * @returns {string|MessageOptions|MessageAdditions|Promise<string|MessageOptions|MessageAdditions>}
+ * @returns {string|BaseMessageOptions|MessageAdditions|Promise<string|BaseMessageOptions|MessageAdditions>}
  */
 
 /**
  * A function modifying a prompt text.
  * @typedef {Function} PromptContentModifier
  * @param {Message} message - Message that triggered the command.
- * @param {string|EmbedBuilder|AttachmentBuilder|AttachmentBuilder[]|MessageOptions} text - Text from the prompt to modify.
+ * @param {string|EmbedBuilder|AttachmentBuilder|AttachmentBuilder[]|BaseMessageOptions} text - Text from the prompt to modify.
  * @param {ArgumentPromptData} data - Miscellaneous data.
- * @returns {string|MessageOptions|MessageAdditions|Promise<string|MessageOptions|MessageAdditions>}
+ * @returns {string|BaseMessageOptions|MessageAdditions|Promise<string|BaseMessageOptions|MessageAdditions>}
  */
 
 /**
@@ -831,5 +831,5 @@ module.exports = Argument;
  * @typedef {Function} PromptContentSupplier
  * @param {Message} message - Message that triggered the command.
  * @param {ArgumentPromptData} data - Miscellaneous data.
- * @returns {string|MessageOptions|MessageAdditions|Promise<string|MessageOptions|MessageAdditions>}
+ * @returns {string|BaseMessageOptions|MessageAdditions|Promise<string|BaseMessageOptions|MessageAdditions>}
  */

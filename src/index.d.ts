@@ -2,9 +2,9 @@ declare module 'discord-akairo' {
     import {
         BufferResolvable, Client, ClientOptions, Collection,
         Message, AttachmentBuilder, AttachmentData, EmbedBuilder,
-        MessageEditOptions, MessageOptions, MessagePayload,
+        MessageEditOptions, BaseMessageOptions, MessagePayload,
         User, UserResolvable, GuildMember,
-        Channel, Role, Emoji, Guild, ReplyMessageOptions,
+        Channel, Role, Emoji, Guild, MessageReplyOptions,
         PermissionResolvable, Snowflake, EmbedData
     } from 'discord.js';
 
@@ -85,7 +85,7 @@ declare module 'discord-akairo' {
         public match: ArgumentMatch;
         public multipleFlags: boolean;
         public flag?: string | string[];
-        public otherwise?: string | MessageOptions | OtherwiseContentSupplier;
+        public otherwise?: string | BaseMessageOptions | OtherwiseContentSupplier;
         public prompt?: ArgumentPromptOptions | boolean;
         public type: ArgumentType | ArgumentTypeCaster;
         public unordered: boolean | number | number[];
@@ -275,14 +275,14 @@ declare module 'discord-akairo' {
         public addMessage(message: Message | Message[]): Message | Message[];
 
         public edit(content: string | MessageEditOptions | MessagePayload): Promise<Message>;
-        public reply(options: string | MessagePayload | ReplyMessageOptions): Promise<Message>;
-        public send(options: string | MessagePayload | MessageOptions): Promise<Message>;
-        public sendNew(options: string | MessagePayload | MessageOptions): Promise<Message>;
+        public reply(options: string | MessagePayload | MessageReplyOptions): Promise<Message>;
+        public send(options: string | MessagePayload | BaseMessageOptions): Promise<Message>;
+        public sendNew(options: string | MessagePayload | BaseMessageOptions): Promise<Message>;
 
         public setEditable(state: boolean): this;
         public setLastResponse(message: Message | Message[]): Message;
 
-        public static transformOptions(options?: string | MessageOptions): MessageOptions;
+        public static transformOptions(options?: string | BaseMessageOptions): BaseMessageOptions;
     }
 
     export class Flag {
@@ -476,7 +476,7 @@ declare module 'discord-akairo' {
 
     export interface DefaultArgumentOptions {
         prompt?: ArgumentPromptOptions;
-        otherwise?: string | MessageOptions | OtherwiseContentSupplier;
+        otherwise?: string | BaseMessageOptions | OtherwiseContentSupplier;
         modifyOtherwise?: OtherwiseContentModifier;
     }
 
@@ -490,7 +490,7 @@ declare module 'discord-akairo' {
         modifyOtherwise?: OtherwiseContentModifier;
         multipleFlags?: boolean;
         flag?: string | string[];
-        otherwise?: string | MessageOptions | OtherwiseContentSupplier;
+        otherwise?: string | BaseMessageOptions | OtherwiseContentSupplier;
         prompt?: ArgumentPromptOptions | boolean;
         type?: ArgumentType | ArgumentTypeCaster;
         unordered?: boolean | number | number[];
@@ -506,9 +506,9 @@ declare module 'discord-akairo' {
 
     export interface ArgumentPromptOptions {
         breakout?: boolean;
-        cancel?: string | MessageOptions | PromptContentSupplier;
+        cancel?: string | BaseMessageOptions | PromptContentSupplier;
         cancelWord?: string;
-        ended?: string | MessageOptions | PromptContentSupplier;
+        ended?: string | BaseMessageOptions | PromptContentSupplier;
         infinite?: boolean;
         limit?: number;
         modifyCancel?: PromptContentModifier;
@@ -518,11 +518,11 @@ declare module 'discord-akairo' {
         modifyTimeout?: PromptContentModifier;
         optional?: boolean;
         retries?: number;
-        retry?: string | MessageOptions | PromptContentSupplier;
-        start?: string | MessageOptions | PromptContentSupplier;
+        retry?: string | BaseMessageOptions | PromptContentSupplier;
+        start?: string | BaseMessageOptions | PromptContentSupplier;
         stopWord?: string;
         time?: number;
-        timeout?: string | MessageOptions | PromptContentSupplier;
+        timeout?: string | BaseMessageOptions | PromptContentSupplier;
     }
 
     export interface ArgumentRunnerState {
@@ -669,20 +669,20 @@ declare module 'discord-akairo' {
     export type MissingPermissionSupplier = (message: Message) => Promise<any> | any;
 
     export type OtherwiseContentModifier = (message: Message, text: string, data: FailureData)
-        => string | MessageOptions | Promise<string | MessageOptions>;
+        => string | BaseMessageOptions | Promise<string | BaseMessageOptions>;
 
     export type OtherwiseContentSupplier = (message: Message, data: FailureData)
-        => string | MessageOptions | Promise<string | MessageOptions>;
+        => string | BaseMessageOptions | Promise<string | BaseMessageOptions>;
 
     export type ParsedValuePredicate = (message: Message, phrase: string, value: any) => boolean;
 
     export type PrefixSupplier = (message: Message) => string | string[] | Promise<string | string[]>;
 
     export type PromptContentModifier = (message: Message, text: string, data: ArgumentPromptData)
-        => string | MessageOptions | Promise<string | MessageOptions>;
+        => string | BaseMessageOptions | Promise<string | BaseMessageOptions>;
 
     export type PromptContentSupplier = (message: Message, data: ArgumentPromptData)
-        => string | MessageOptions | Promise<string | MessageOptions>;
+        => string | BaseMessageOptions | Promise<string | BaseMessageOptions>;
 
     export type RegexSupplier = (message: Message) => RegExp;
 
